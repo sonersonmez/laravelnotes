@@ -1,2 +1,0 @@
-# laravelnotes
-Laravel notlarım
