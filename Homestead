@@ -1,0 +1,71 @@
+Merhabalar, bu yazımızda homestead kurulumu hakkında bildiklerimi aktarmaya çalışacağım.
+
+Backend developer olarak "kod" yazmaktan da önce elimize gelen, ya da oluşturduğumuz projeyi ayağa kaldırmak daha da önem arz ediyor. Çalışmayan projeyi nasıl kodlayabiliriz ki?
+Bu aşamada WAMP/XAMPP gibi çözümler elimizin altında bulunsa da tercih edilmediğini, seniorlar tarafından bu araçların kullanıldığı görüldüğünde "emhh"ler yaşandığını görüyoruz.
+Bunun için, daha profesyonel olan ve backend developer olarak hem göz aşınalığımız olması açısından hem de gerçekte bir projeyi sunucuya gönderdiğimizde yaşayabileceğimiz sorunları gözlemleyebilmek için farklı tercihlerde bulunuyoruz.
+Bunların en başında bilgisayarımızda bir sunucu gibi çalışan VM (Virtual Machine) araçları kullanıp, bunların üzerine kurulumlarımızı yapmamız gerekiyor.
+Backend kodlarımızı yazabilmemiz için bize bir web sunucusu (Nginx, Apache), bir veritabanı (MySQL, PostgreSQL, MongoDB) ve bir de programlama dili (Php, Python, C#) gerekiyor.
+
+Zaten hali hazırla kurulu olan XAMPP, WAMP gibi araçlar da içerisinde bunları barındırıyor. Ama tercih meselesi tabii, projeyi canlıya almadan önce sunucu tabanında da nelerle karşılaşabileceğimizi görmek için VM üzerine kurulum yapmak daha profesyonelce.
+
+Peki, sanal sunucuda proje çalıştırmak ne gibi aşamalardan oluşuyor?
+
+1. Aşamada, bilgisayarımıza bir sanal sunucu kurmamız gerekiyor. Bunun için, Oracle VirtualBox kullanıyorum.
+    - İndirme Linki: https://www.virtualbox.org/
+    - Download'a tıkladık.
+    - "VirtualBox x.x.xx platform packages" altında işletim sistemimize uygun olan sürümü seçtik
+    - İndirme bittikten sonra Setup'ı açıp next next diyerek kurulumu tamamladık. Ekstra bir ayar yapmamıza gerek yok.
+
+2. Aşamada, bu sanal sunucu üzerinde çalışacak bir çekirdek gerekiyor bize. Bunun için Vargant kullanıyorum.
+    - İndirme Linki: https://www.vagrantup.com/
+    - Download'a tıkladık.
+    - 64 bit işletim sistemi kullandığım için Amd64'e tıkladım. Diğerini indirseniz de yüksek ihtimalle sorun yaşamazsınız.
+    - Setup'ı açtık ve kuruluma devam ettik, ekstra bir ayar yapmamıza gerek yok.
+    - Bu aşamada bilgisayarımızı yeniden başlatmamız gerekiyor. Restart attık.
+    
+Ben proje dosyalarımı C: Dizini altında projects diye bir dosyanın içinde tutuyorum. Bunun için ister konsoldan
+    - cd C:\
+    - mkdir projects
+    - cd projects
+komutlarıyla, ister elle gidip dosya oluşturabilirsiniz. Oluşturduğumuz projects dosyasının içine girdikten sonra Windows için Shift+Sağ Tık yapıp terminalde aç diyoruz.
+
+3. Aşamada, Homestead kurmak için
+    - Konsol ekranına projects dizini içerisindeyken "vargant box add laravel/homestead" yazıp enter'a tıklıyoruz.
+    - Hangi providerla çalışacağımızı soran ekranda virtualbox'ın ait olduğu sayıyı girip enter'a tıklıyoruz.
+    - Kurulumun bitmesini bekliyoruz.
+    - Homestead'ı kurmak için laravel.com adresine gidip, documentions'ta homestead'ı buluyoruz. Link: https://laravel.com/docs/9.x/homestead
+    - Bize söylediği git linkini kopyalayıp (Git'i sisteminize önceden kurmanız gerekiyor) terminale yapıştırıyoruz.
+    - Link: git clone https://github.com/laravel/homestead.git ~/Homestead burada Homestead'ı ben projects dizini altına kurmak istediğim için "~/" kısmını silip sadece Homestead bırakıyorum.
+    - Yani benim linkim: git clone https://github.com/laravel/homestead.git Homestead oluyor, enter'a tıklıyoruz.
+    - Oluşan Homestead dizinine giriyoruz. cd C:\projects\Homestead
+    - Dizine girdikten sonra .\init.bat komutunu çalıştırıyoruz (Mac kullanıyorsanız dökümantasyona bakınız.)
+    
+4. Aşamada, Homestead'a bağlanmak için bir ssh-key oluşturmamız gerekiyor. Bunun için:
+    - Yine Homestead dizinindeyken, "ssh-keygen -t rsa -C "adiniz@homestead" kodunu yapıştırıyoruz. Adınızı değiştin lütfen.
+    - Şifre soruyor, boş bırakıp enter enter diyoruz.
+    - Key'imizi aldıktan sonra yine konsoldan Homestead dizinine gidip "vagrant up" yazıyoruz.
+    - Vagrant'ın düzgün çalışıp çalışmadığını anlamak için kurulum bittikten sonra "vagrant ssh" yazıyoruz. Konsolda şekilli bir homestead yazısı geliyorsa sıkıntı yok demektir.
+    - Eğer sanallaştırma sorunu yaşıyorsanız, bilgisayarınız BIOS ayarlarından sanallaştırmayı (Virtual) aktif etmek gerekiyor.
+    
+## Konfigrasyon Ayarları
+
+    - Homestead dosyası içerisinde homstead.yaml'a sağ tık yapıp not defteriyle açıyoruz.
+    - IP Adresini ellememize gerek yok.
+    - Memory kısmını bilgisayarınızda mevcut olan RAM miktarının 1/3'ünü verebilirsiniz. 12 GB RAM için 4096 değeri girmek gibi.
+    - cpus kısmı aynı kalabilir.
+    - provider aynı kalabilir.
+    - authorize ve keys kısmı bizim daha demin oluşturduğumuz ssh-key'in yolunu hedef alıyor zaten, değiştirmeye gerek yok.
+    - folders: altındaki map kısmını biz project olarak değiştirdiğimiz için, "~/code" yerine "/projects/" olarak değiştiriyoruz.
+    - sites kısmını üzerinde çalışacağımız projelerin host ayarı için konfigüre edeceğiz.
+    
+Artık homestead kurulumumuz ve konfigürasyon ayarlarımız tamam. Artık proje oluşturup, ya da klonlayıp çalıştıralım.
+    // güncellenecek
+    
+    
+## Vagrant'ta sürekli kullanacağınız komutlar:
+    - vagrant --version //versiyon kontrolü için
+    - vagrant up //sanal sunucuyu çalıştırmak için
+    - vagrant ssh //sanal sunucuya bağlanmak için
+    - vagrant suspend //sanal sunucuyu kapatmak için
+    - vagrant reload --provision //yeniden başlat, ama homestead.yaml içerisindeki değişiklikleri de kontrol et.
+    
