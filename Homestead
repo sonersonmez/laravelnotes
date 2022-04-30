@@ -41,7 +41,7 @@ komutlarıyla, ister elle gidip dosya oluşturabilirsiniz. Oluşturduğumuz proj
     - Dizine girdikten sonra .\init.bat komutunu çalıştırıyoruz (Mac kullanıyorsanız dökümantasyona bakınız.)
     
 4. Aşamada, Homestead'a bağlanmak için bir ssh-key oluşturmamız gerekiyor. Bunun için:
-    - Yine Homestead dizinindeyken, "ssh-keygen -t rsa -C "adiniz@homestead" kodunu yapıştırıyoruz. Adınızı değiştin lütfen.
+    - Yine Homestead dizinindeyken, "ssh-keygen -t rsa -C "adiniz@homestead" kodunu yapıştırıyoruz. Adınızı değiştirin lütfen.
     - Şifre soruyor, boş bırakıp enter enter diyoruz.
     - Key'imizi aldıktan sonra yine konsoldan Homestead dizinine gidip "vagrant up" yazıyoruz.
     - Vagrant'ın düzgün çalışıp çalışmadığını anlamak için kurulum bittikten sonra "vagrant ssh" yazıyoruz. Konsolda şekilli bir homestead yazısı geliyorsa sıkıntı yok demektir.
@@ -59,7 +59,41 @@ komutlarıyla, ister elle gidip dosya oluşturabilirsiniz. Oluşturduğumuz proj
     - sites kısmını üzerinde çalışacağımız projelerin host ayarı için konfigüre edeceğiz.
     
 Artık homestead kurulumumuz ve konfigürasyon ayarlarımız tamam. Artık proje oluşturup, ya da klonlayıp çalıştıralım.
-    // güncellenecek
+
+##Projeyi ayağa kaldırmak
+    - Öncelikle terminalimizi açıp "cd C:\projects\Homestead" yazalım.
+    - Homestead dizini altındayken "vagrant up" yazarak vagrant'ımızı ayağa kaldıralım.
+    - Biraz beklemeden sonra tekrar yolumuz gözükecek. Vagrant ayağa kalktıktan sonra "vagrant ssh" yazarak sanal sunucumuza bağlanalım.
+    - Homestead yazısını gördükten sonra, composer yardımıyla laravel projemizi artık oluşturabiliriz.
+    - Projemizi oluşturduktan sonra C:\projects\Homestead dosyasını açıp Homestead.yaml dosyasını sağ tıklayarak notepad ile açalım.
+    - folders kısmını zaten bir üstte anlattığım şekilde ayarlamıştık, sites kısmına gelelim.
+    - Homestead için,
+        - map: homestead.test
+          to: /home/vagrant/code/public
+    - Projemiz için,
+        - map: projemizinadi.test
+          to: /home/vagrant/code/public
+    - Ayarlarımızı yapalım. map kısmına karşılık gelen alanı tarayıcımıza yazdığımızda bizi projemize yönlendirecek. Yani sizin laravel projeniz o adresten çalışacak. 127.0.0.1 ya da localhost yerine burada verdiğimiz isimden ulaşabiliyor olacağız.
+    - Sanal host kurulumunu homestead.yaml'da yaptıktan sonra Windows kullananlar için, bunu windows'a da tanıtmamız gerekiyor.
+    - C:\Windows\System32\drivers\etc yoluna gidelim. "hosts" dosyasına sağ tıklıyarak notepad ile açalım.
+    - # ile işaretlenmiş alanlar yorum satırlarıdır, sile de bilirsiniz orada da kalabilir çok önemli değil. En alta inelim
+    - Homestead.yaml'da tanımalanan ip adresimi yazıp bir boşluk bırakıp projemiz için oluşturduğumuz - map: projemizinadi.test kısmındaki sanal domain'i kopyalayalım.
+    - Yani hosts dosyası içerisinde, Homestead.yamlIcindekiIpAdresi  projemizinadi.test
+    - Daha da uygun bir örnekle, 192.168.56.56 projem.test şeklinde tanımlayalım. Başında # işareti olmasın.
+    - Kaydedip çıkalım.
+    - Değişiklikleri vagrant'a bildirmek için vagrant'ın çalıştığı terminalimizi açıp "vagrant reload --provision" yazıp enter'a tıklayalım.
+    - Restart işlemi bittikten sonra herhangi bir tarayıcıya açıp sanal domainimizin url'ini yazıp projenin ayağa kalktığını görebiliriz.
+    - Laravel projesi içerisinde hata alıyorsanız "composer install"ı deneyebilirsiniz.
+    
+## Günlük Kullanım
+    - Terminalimizi açıp "cd C:\projects\Homestead" dizinine gidelim.
+    - "vagrant up" yazarak vagrant'ı çalıştıralım.
+    - "vagrant ssh" yazarak sanal sunucumuza bağlanalım.
+    - IDE'mizi açıp kodlamaya başlayalım.
+    - Çalıştığımız projenin hostunu Homestead.yaml dosyası içerisindeki sites: kısmından bulalım ve tarayıcımızda açalım. system32 altındaki hosts'ta da olduğundan emin olalım.
+    - İşimiz bittikten sonra vagrant'ın çalıştığı terminalden "exit" yazarak graceful shutdown yapalım, çarpıya basıp çıktığımızda bazen vagrant kapanmıyor, bazen küsüyor açılmıyor gibi sorunlarla karşılaşabilirsiniz.
+    * Eğer laravel'de paket falan eklerseniz bazen değişiklikleri algılaması için "vagrant reload --provision" yazıp sunucuyu reload yapmanız gerekebilir.
+    
     
     
 ## Vagrant'ta sürekli kullanacağınız komutlar:
