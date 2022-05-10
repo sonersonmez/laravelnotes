@@ -16,7 +16,7 @@ Peki, sanal sunucuda proje çalıştırmak ne gibi aşamalardan oluşuyor?
     - "VirtualBox x.x.xx platform packages" altında işletim sistemimize uygun olan sürümü seçtik
     - İndirme bittikten sonra Setup'ı açıp next next diyerek kurulumu tamamladık. Ekstra bir ayar yapmamıza gerek yok.
 
-2. Aşamada, bu sanal sunucu üzerinde çalışacak bir çekirdek gerekiyor bize. Bunun için Vargant kullanıyorum.
+2. Aşamada, bu sanal sunucu üzerinde çalışacak bir çekirdek gerekiyor bize. Bunun için Vagrant kullanıyorum.
     - İndirme Linki: https://www.vagrantup.com/
     - Download'a tıkladık.
     - 64 bit işletim sistemi kullandığım için Amd64'e tıkladım. Diğerini indirseniz de yüksek ihtimalle sorun yaşamazsınız.
@@ -30,7 +30,7 @@ Ben proje dosyalarımı C: Dizini altında projects diye bir dosyanın içinde t
 komutlarıyla, ister elle gidip dosya oluşturabilirsiniz. Oluşturduğumuz projects dosyasının içine girdikten sonra Windows için Shift+Sağ Tık yapıp terminalde aç diyoruz.
 
 3. Aşamada, Homestead kurmak için
-    - Konsol ekranına projects dizini içerisindeyken "vargant box add laravel/homestead" yazıp enter'a tıklıyoruz.
+    - Konsol ekranına projects dizini içerisindeyken "vagrant box add laravel/homestead" yazıp enter'a tıklıyoruz.
     - Hangi providerla çalışacağımızı soran ekranda virtualbox'ın ait olduğu sayıyı girip enter'a tıklıyoruz.
     - Kurulumun bitmesini bekliyoruz.
     - Homestead'ı kurmak için laravel.com adresine gidip, documentions'ta homestead'ı buluyoruz. Link: https://laravel.com/docs/9.x/homestead
