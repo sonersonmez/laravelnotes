@@ -1,0 +1,22 @@
+Burada, laravel ile API test yazarken kullandığım metodolojiyi yazıp sizlere test yazma hakkında bilgiler vermeye çalışacağım.
+
+## Test File'ı oluşturulması
+  Laravel'de bir test dosyası oluşturmak için terminale "php artisan make:test ExampleTest --unit" komutunu girmemiz gerekiyor.
+  ExampleTest dosya adımız, hangi controller'a ya da hangi birime test yazacaksak o dosyanın adıyla dosyayı oluşturuyoruz.
+  Burada iki seçeneğimiz var, birisi Tests\TestCase'den gelen test methodları, diğeri de PhpUnit ile birlikte gelen test classları.
+  API test için ben Laravel core'un kendi kütüphanesi olan Tests\Testcase'i kullanıyorum. Bu şekilde http client gibi endpointlere request'lerde bulunabiliyoruz.
+  PhpUnit kullanmak isterseniz bir http kütüphanesi dahil etmeniz gerekecektir.
+
+## Metodoloji
+  Öncelikle test etmek istediğimiz endpointi api.php üzerinde kontrol ediyoruz, get/post/put/delete olarak ayrı ayrı kullandığım sabit yöntemlere bakacağız.
+  
+  ## Route::get
+      ## Success Test
+          Get Route'u için öncelikle Postman aracılığıyla istek gönderip gelen dataya ve statü koduna bakıyoruz. Get route'u bize 200 statü kodu dönmeli ve datayı basabilmeli.
+          Ardından test klasörümüzü açıp get isteği yapmalı ve 200 statü kodu beklemeliyiz, ardından da count ile postman'den kaç data döndüğünü kontrol etmeliyiz.
+      
+      ## Fail Test
+          Kullanıcının giriş yapmadı: Bu durumda unauthorized hatası almayı beklemeliyiz. Endpointe bir kullanıcı göndermeden istekte bulunmalı ve 401 statü kodu beklemeliyiz.
+          Yetkisiz erişim testi: Yetkisiz bir kullanıcı oluşturmalı get isteği yapmayı denemeliyiz. Dönen data error olmalı ve yetkisiz erişim vermeli. Statü kodu 403 beklemeliyiz.
+      
+      // Route post put ve delete güncellenecek.
